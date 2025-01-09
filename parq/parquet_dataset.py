@@ -161,6 +161,7 @@ class ParquetDataset(IterableDataset):
         # 1. If we've already read all local records, end the epoch and return an empty buffer
         if self.local_current >= self.local_end:
             self.epoch += 1
+            self.local_current = self.records_per_rank * self.rank
             return
         
         # 2. Determine how many records remain for this rank and cap it to the buffer size
